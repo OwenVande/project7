@@ -2,6 +2,9 @@ var screen = document.getElementById("screen")
 var namespace = "http://www.w3.org/2000/svg"
 var click = false
 var selectedShape = document.getElementById("shapeSelect").value
+var rainbowOn = document.getElementById("colorSelect").value
+var rainbowArray = ["red","orange","yellow","green","blue","purple"]
+var currentColor = 0
 // utility function
 function transformPoint(event) {
   var pt = screen.createSVGPoint()
@@ -25,7 +28,8 @@ function drawCircle(x, y, size, color) {
 
 document.addEventListener("mousedown",function(e){
   selectedShape = document.getElementById("shapeSelect").value
-  if(selectedShape == "circle"){
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn != "rainbow"){
     if(click==false){
     var pt = transformPoint(e, screen)
     drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,document.getElementById("colorSelect").value)
@@ -35,7 +39,8 @@ document.addEventListener("mousedown",function(e){
 })
 document.addEventListener("mousemove",function(e){
   selectedShape = document.getElementById("shapeSelect").value
-  if(selectedShape == "circle"){
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn != "rainbow"){
     if(click==true){
     var pt = transformPoint(e, screen)
     drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,document.getElementById("colorSelect").value)
@@ -44,7 +49,8 @@ document.addEventListener("mousemove",function(e){
 })
 document.addEventListener("mouseup",function(e){
   selectedShape = document.getElementById("shapeSelect").value
-  if(selectedShape == "circle"){
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn != "rainbow"){
     click = false
     var pt = transformPoint(e, screen)
     drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,document.getElementById("colorSelect").value)
@@ -91,11 +97,100 @@ document.addEventListener("mouseup",function(e){
   }
 })
 
-
-
-
-// Step 3: Event listeners
+//rainbow rectangle
 document.addEventListener("mousedown", function(e) {
-  // what do you want to do when the user presses down
-  // on the mouse button?
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "square" && rainbowOn == "rainbow"){
+    var pt = transformPoint(e, screen)
+    drawSquare(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+    currentColor = 1
+    click = true
+  }
 })
+document.addEventListener("mousemove",function(e){
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "square" && rainbowOn == "rainbow"){
+    if(click==true){
+      var pt = transformPoint(e, screen)
+      drawSquare(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+      if(currentColor<5){
+        currentColor = currentColor+1
+      }
+      else if(currentColor==5){
+        currentColor = 0
+      }
+    }
+  }
+})
+document.addEventListener("mouseup",function(e){
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "square" && rainbowOn == "rainbow"){
+    click = false
+    var pt = transformPoint(e, screen)
+    drawSquare(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+  }
+})
+
+//rainbow circle
+document.addEventListener("mousedown", function(e) {
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn == "rainbow"){
+    var pt = transformPoint(e, screen)
+    drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+    currentColor = 1
+    click = true
+  }
+})
+document.addEventListener("mousemove",function(e){
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn == "rainbow"){
+    if(click==true){
+      var pt = transformPoint(e, screen)
+      drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+      if(currentColor<5){
+        currentColor = currentColor+1
+      }
+      else if(currentColor==5){
+        currentColor = 0
+      }
+    }
+  }
+})
+document.addEventListener("mouseup",function(e){
+  selectedShape = document.getElementById("shapeSelect").value
+  rainbowOn = document.getElementById("colorSelect").value
+  if(selectedShape == "circle" && rainbowOn == "rainbow"){
+    click = false
+    var pt = transformPoint(e, screen)
+    drawCircle(pt.x,pt.y,document.getElementById("sizeSelect").value,rainbowArray[currentColor])
+  }
+})
+
+
+
+//stamp
+document.addEventListener("mouseup", function(e) {
+  selectedShape = document.getElementById("shapeSelect").value
+  if(selectedShape == "stamp"){
+    console.log("might be working")
+    var pt = transformPoint(e, screen)
+    //document.getElementById("screen").append('<img href="http://www.hey.fr/fun/emoji/android/en/android/658-emoji_android_fearful_face.png" height="64px" width="64px" x='+pt.x+' y='+pt.y+'>')
+    var x = document.createElement("IMG");
+    x.setAttribute("src", 'http://www.hey.fr/fun/emoji/android/en/android/658-emoji_android_fearful_face.png'); //show picture
+    x.setAttribute("width", document.getElementById("sizeSelect").value);
+    x.setAttribute("height", document.getElementById("sizeSelect").value);
+    x.setAttribute("x", pt.x);
+    x.setAttribute("y", pt.y);
+    document.getElementById("screen").appendChild(x);
+  }
+})
+
+//reload page
+function reloadPage(){
+	location.reload();
+}
