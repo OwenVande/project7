@@ -177,16 +177,8 @@ document.addEventListener("mouseup",function(e){
 document.addEventListener("mouseup", function(e) {
   selectedShape = document.getElementById("shapeSelect").value
   if(selectedShape == "stamp"){
-    console.log("might be working")
     var pt = transformPoint(e, screen)
-    //document.getElementById("screen").append('<img href="http://www.hey.fr/fun/emoji/android/en/android/658-emoji_android_fearful_face.png" height="64px" width="64px" x='+pt.x+' y='+pt.y+'>')
-    var x = document.createElement("IMG");
-    x.setAttribute("src", 'http://www.hey.fr/fun/emoji/android/en/android/658-emoji_android_fearful_face.png'); //show picture
-    x.setAttribute("width", document.getElementById("sizeSelect").value);
-    x.setAttribute("height", document.getElementById("sizeSelect").value);
-    x.setAttribute("x", pt.x);
-    x.setAttribute("y", pt.y);
-    document.getElementById("screen").appendChild(x);
+    document.getElementById("screen").innerHTML += "<image xlink:href= 'face.png' x="+pt.x+" y="+pt.y+" height=50px width=50px />"
   }
 })
 
